@@ -35,14 +35,32 @@
 
 ### Решение 2
 
-# PromQL-запросы для мониторинга системы
+Мои запросы
 
-## 1. Утилизация CPU (в процентах, 100-idle)
-**Цель:** Показать общую загрузку CPU системы в процентах.
+Утилизация CPU (в процентах, 100-idle)
 
-```promql
+```
 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100)
 ```
+
+Средняя загрузка системы (Load Average) 1/5/15 минут
+
+```
+node_load1 or node_load5 or node_load15
+```
+
+Количество свободной оперативной памяти
+
+```
+node_memory_MemFree_bytes
+```
+
+Количество свободного места на файловой системе
+```
+node_filesystem_free_bytes{device!~"tmpfs|rootfs", fstype!="tmpfs"}
+```
+
+![img3](img/img3.jpg)
 
 ------
 
