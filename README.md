@@ -57,7 +57,7 @@ node_memory_MemFree_bytes
 
 Количество свободного места на файловой системе
 ```
-node_filesystem_free_bytes{device!~"tmpfs|rootfs", fstype!="tmpfs"}
+node_filesystem_free_bytes{mountpoint="/"}
 ```
 
 ![img3](img/img3.jpg)
@@ -70,6 +70,23 @@ node_filesystem_free_bytes{device!~"tmpfs|rootfs", fstype!="tmpfs"}
 1. В качестве решения задания приведите скриншот вашей итоговой Dashboard.
 
 ### Решение 3
+
+Были созданы алерты на каждый дашборд
+
+### 1. Алерт: Утилизация CPU
+**Метрика:** `100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100)`
+- **Порог:** > 90%
+- **Время срабатывания:** 3 минуты
+- **Severity:** Warning
+- **Condition в Grafana:**
+  ```
+  WHEN: last()
+  OF: query(A, 1m, now)
+  IS ABOVE: 90
+  ```
+  
+ 
+  
 
 ------
 
